@@ -1,0 +1,19 @@
+if _G.GlitchReplace.GlitchRush then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Teilsthebfdifan/suggested/refs/heads/main/GLITCHEDRUSHMUSTAAARD.lua"))()
+end
+
+if _G.GlitchReplace.GlitchAmbush then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Teilsthebfdifan/suggested/refs/heads/main/giwhrkuxhgambuahweush.lua"))()
+end
+
+if _G.GlitchReplace.GlitchScreech then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Teilsthebfdifan/suggested/refs/heads/main/GLITCHSCREECHreplacer.lua"))()
+end
+
+if _G.GlitchReplace.GlitchHalt then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Teilsthebfdifan/suggested/refs/heads/main/ShadeGlitch.lua"))()
+end
+
+if _G.GlitchReplace.GlitchUIStuff then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Teilsthebfdifan/suggested/refs/heads/main/UIStuffGlitch.lua"))()
+end
