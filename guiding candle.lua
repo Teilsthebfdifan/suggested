@@ -8,16 +8,17 @@ require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("
 task.wait(1)
 require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Candle is buggy, tell issue if found", true)
 
-local highlights = {}
 local player = game.Players.LocalPlayer
 local char = player.Character or player.CharacterAdded:Wait()
 local root = char:WaitForChild("HumanoidRootPart")
 local tweenService = game:GetService("TweenService")
 local distanceThreshold = 120
-local Candle = GuidingCandle:FindFirstChild("Candle")
 local flicker = false
 local stopFlickering = false
 local toolEquipped = false
+local highlights = {}
+
+local Candle = GuidingCandle:FindFirstChild("Candle")
 
 local entityNames = {
     RushMoving = "Rush",
@@ -41,7 +42,7 @@ local entityNames = {
 local function updateCandleEffects(state, color)
     if Candle then
         for _, descendant in ipairs(Candle:GetDescendants()) do
-            if descendant:IsA("PointLight") then
+            if descendant:IsA("PointLight") or descendant:IsA("SurfaceLight") then
                 descendant.Enabled = state
                 descendant.Color = color
             elseif descendant:IsA("ParticleEmitter") then
@@ -54,6 +55,8 @@ end
 
 local function flickerCandle()
     stopFlickering = false
+    updateCandleEffects(true, Color3.fromRGB(255, 0, 0))
+    task.wait(0.1)
     while flicker do
         if stopFlickering then break end
         updateCandleEffects(true, Color3.fromRGB(255, 0, 0))
@@ -114,23 +117,8 @@ local function manageHighlight(doorPart)
     highlight.Parent = doorPart
     highlights[doorPart] = highlight
 
-    local tween = tweenService:Create(highlight, TweenInfo.new(2.5), {FillTransparency = 0.5, OutlineTransparency = 0})
-    tween:Play()
-    tween.Completed:Connect(function()
-        if not toolEquipped then
-            highlight:Destroy()
-            highlights[doorPart] = nil
-        end
-    end)
-end
-
-local function updateHighlights()
-    for doorPart, highlight in pairs(highlights) do
-        if root and doorPart and highlight then
-            local distance = (root.Position - doorPart.Position).Magnitude
-            highlight.Enabled = toolEquipped and (distance <= distanceThreshold)
-        end
-    end
+    local fadeInTween = tweenService:Create(highlight, TweenInfo.new(0.5), {FillTransparency = 0.5, OutlineTransparency = 0})
+    fadeInTween:Play()
 end
 
 local function highlightDoors()
@@ -142,17 +130,18 @@ local function highlightDoors()
             end
         end
     end
-    updateHighlights()
 end
 
 local function fadeOutHighlights()
-    local tweenInfo = TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
+    local tweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
     for doorPart, highlight in pairs(highlights) do
         local tween = tweenService:Create(highlight, tweenInfo, {FillTransparency = 1, OutlineTransparency = 1})
         tween:Play()
         tween.Completed:Connect(function()
-            highlight:Destroy()
-            highlights[doorPart] = nil
+            if not toolEquipped then
+                highlight:Destroy()
+                highlights[doorPart] = nil
+            end
         end)
     end
 end
@@ -160,14 +149,16 @@ end
 GuidingCandle.Equipped:Connect(function()
     toolEquipped = true
     highlightDoors()
+    for _, highlight in pairs(highlights) do
+        local fadeIn = tweenService:Create(highlight, TweenInfo.new(0.5), {FillTransparency = 0.5, OutlineTransparency = 0})
+        fadeIn:Play()
+    end
 end)
 
 GuidingCandle.Unequipped:Connect(function()
     toolEquipped = false
     fadeOutHighlights()
 end)
-
-game:GetService("RunService").Heartbeat:Connect(updateHighlights)
 
 workspace.DescendantAdded:Connect(function(obj)
     if obj:IsA("Model") and obj.Name == "Door" and toolEquipped then
