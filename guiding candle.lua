@@ -6,7 +6,7 @@ GuidingCandle.Animations.idle.AnimationId = "rbxassetid://10479585177"
 
 require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Candle made by kodbol, Reworked by AROxMBUSH, Discord: [https://discord.gg/76Mq5tQWAV]", true)
 task.wait(1)
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Candle is buggy, tell issue if found", true)
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("ok who asked", true)
 
 local player = game.Players.LocalPlayer
 local char = player.Character or player.CharacterAdded:Wait()
