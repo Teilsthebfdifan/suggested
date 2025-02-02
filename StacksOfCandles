@@ -1,11 +1,11 @@
-if _G.Settings.Guiding then
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Teilsthebfdifan/suggested/refs/heads/main/guiding%20candle.lua"))()
-end
+if _G.ReceivedCandles.Guiding then  
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Teilsthebfdifan/suggested/refs/heads/main/guiding%20candle.lua"))()  
+end  
 
-if _G.Settings.Mischievous then
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Teilsthebfdifan/suggested/refs/heads/main/Mischievous%20candle.lua"))()
-end
+if _G.ReceivedCandles.Mischievous then  
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Teilsthebfdifan/suggested/refs/heads/main/Mischievous%20candle.lua"))()  
+end  
 
-if _G.Settings.Curious then
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Teilsthebfdifan/suggested/refs/heads/main/curious%20candle.lua"))()
+if _G.ReceivedCandles.Curious then  
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Teilsthebfdifan/suggested/refs/heads/main/curious%20candle.lua"))()  
 end
