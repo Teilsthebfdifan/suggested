@@ -81,7 +81,7 @@ if Survived then
                     local startTime = tick()
                     repeat
                         task.wait()
-                    until (root.Position - startPos).magnitude > 0.3 or tick() - startTime > 0.2
+                    until (root.Position - startPos).magnitude > 0.3 or tick() - startTime > 2
                     if (root.Position - startPos).magnitude > 0.3 then
                         humanoid.Health = math.max(humanoid.Health - 50, 0)
                     end
