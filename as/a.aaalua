@@ -1,0 +1,36 @@
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Players = game:GetService("Players")
+
+local assetId = "rbxassetid://94261969280474"
+local loadedAssets = game:GetObjects(assetId)
+
+if #loadedAssets > 0 then
+	local model = loadedAssets[1]
+	model.Name = "MafiosoRig"
+	model.Parent = ReplicatedStorage
+else
+	warn("fauled")
+end
+
+local function replaceCharacterParts(player)
+	local character = player.Character
+	if not character then return end
+
+	local mafiosoRig = ReplicatedStorage:FindFirstChild("MafiosoRig")
+	if not mafiosoRig then return end
+
+	for _, newPart in ipairs(mafiosoRig:GetChildren()) do
+		local oldPart = character:FindFirstChild(newPart.Name)
+		if oldPart then
+			local clonedPart = newPart:Clone()
+			clonedPart.Parent = character
+			oldPart:Destroy()
+		end
+	end
+end
+
+Players.PlayerAdded:Connect(function(player)
+	player.CharacterAdded:Connect(function()
+		replaceCharacterParts(player)
+	end)
+end)
